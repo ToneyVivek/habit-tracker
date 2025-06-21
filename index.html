@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<body>
+    <div class="storage-status" id="storage-status"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1 id="page-title">Daily Habit Tracker</h1>
+                <p>Track your daily habits and measurable data</p>
+            </div>
+            <div class="header-right">
+                <div class="month-selector">
+                    <select id="month-select">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                    <select id="year-select"></select>
+                </div>
+                <button id="dark-mode-toggle" class="dark-mode-btn" title="Toggle Dark Mode">
+                    <span class="dark-mode-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="month-info" id="month-info">
+            <!-- Month-specific information will be displayed here -->
+        </div>
+
+        <div class="controls">
+            <div class="controls-grid">
+                
+                <div>
+                    <label class="progress-label">Add New Habit</label>
+                    <div class="add-habit-form">
+                        <input type="text" id="new-habit-input" class="habit-input" placeholder="Enter new habit">
+                        <button class="btn btn-primary btn-icon" id="add-habit-btn">+</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="progress-label">Add Data Metric</label>
+                    <div class="add-metric-form">
+                        <input type="text" id="new-metric-input" class="metric-input" placeholder="e.g., Phone Usage">
+                        <input type="text" id="new-metric-unit" class="metric-unit-input" placeholder="hours">
+                        <button class="btn btn-primary btn-icon" id="add-metric-btn">+</button>
+                    </div>
+                </div>
+                <div class="progress-box">
+                    <p class="progress-label">Habit Progress</p>
+                    <p class="progress-value" id="overall-progress">0%</p>
+                </div>
+                <div class="data-controls">
+                    <label class="progress-label">Data Management</label>
+                    <button class="btn btn-secondary" id="export-btn">Export Data</button>
+                    <button class="btn btn-secondary" id="import-btn">Import Data</button>
+                    <button class="btn btn-danger" id="clear-btn">Clear All Data</button>
+                    <input type="file" id="file-input" class="file-input" accept=".json">
+                </div>
+                <div class="chart-controls">
+                    <label class="progress-label">Habit Charts</label>
+                    <button class="btn btn-primary" id="toggle-habit-chart-btn">Show Habit Charts</button>
+                    <button class="btn btn-secondary" id="reset-habit-chart-btn" style="display: none;">Reset</button>
+                </div>
+                <div class="chart-controls">
+                    <label class="progress-label">Data Charts</label>
+                    <button class="btn btn-primary" id="toggle-data-chart-btn">Show Data Charts</button>
+                    <button class="btn btn-secondary" id="reset-data-chart-btn" style="display: none;">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Habit Chart Section -->
+            <div class="chart-section" id="habit-chart-section" style="display: none;">
+                <div class="chart-header">
+                    <h2 class="chart-title">Habit Progress Chart</h2>
+                    <div class="chart-controls-inline">
+                        <div class="chart-type-selector">
+                            <button class="chart-type-btn active" data-type="line" data-chart="habit">Line</button>
+                            <button class="chart-type-btn" data-type="bar" data-chart="habit">Bar</button>
+                            <button class="chart-type-btn" data-type="area" data-chart="habit">Area</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="habit-selector" id="habit-selector">
+                    <!-- Habit checkboxes will be generated here -->
+                </div>
+
+                <div class="chart-container">
+                    <canvas class="chart-canvas" id="habit-chart"></canvas>
+                </div>
+
+                <div class="chart-legend" id="habit-chart-legend">
+                    <!-- Legend will be generated here -->
+                </div>
+            </div>
+
+            <!-- Data Chart Section -->
+            <div class="chart-section" id="data-chart-section" style="display: none;">
+                <div class="chart-header">
+                    <h2 class="chart-title">Data Metrics Chart</h2>
+                    <div class="chart-controls-inline">
+                        <div class="chart-type-selector">
+                            <button class="chart-type-btn active" data-type="line" data-chart="data">Line</button>
+                            <button class="chart-type-btn" data-type="bar" data-chart="data">Bar</button>
+                            <button class="chart-type-btn" data-type="area" data-chart="data">Area</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-selector" id="metric-selector">
+                    <!-- Metric checkboxes will be generated here -->
+                </div>
+
+                <div class="chart-container">
+                    <canvas class="chart-canvas" id="data-chart"></canvas>
+                </div>
+
+                <div class="chart-legend" id="data-chart-legend">
+                    <!-- Legend will be generated here -->
+                </div>
+            </div>
+
+            <!-- Main Habit Grid -->
+            <div class="main-grid">
+                <div class="grid-container">
+                    <table class="habit-table" id="habit-table">
+                        <thead>
+                            <tr>
+                                <th class="date-cell">Date</th>
+                                <th class="notes-cell">Daily Notes</th>
+                                <!-- Habit and metric headers will be generated by JavaScript -->
+                            </tr>
+                        </thead>
+                        <tbody id="habit-tbody">
+                            <!-- Rows will be generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid" id="stats-grid">
+                        <!-- Stats will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
